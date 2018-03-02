@@ -1,20 +1,24 @@
 !function(){
+    var duration = 50;
+    var container = document.getElementById('code');
+    var styleTag = document.getElementById('styleTag')
     function writeCode(prefix,code,fn){
-        var container = document.getElementById('code');
-        var styleTag = document.getElementById('styleTag')
-        var n=0
-        var id = setInterval(
-            function(){
-                n+=1;
-                container.innerHTML=code.substring(0,n);
-                container.parentElement.scrollTop=container.scrollHeight;
-                styleTag.innerHTML=code.substring(0,n);
-                if(n>=code.length){
-                    window.clearInterval(id)
-                    fn && fn.call()
-                }
-            },1)
+        var n=0;
+        id= setTimeout(function run(){
+            n+=1;
+            container.innerHTML=code.substring(0,n);
+            container.parentElement.scrollTop=container.scrollHeight;
+            styleTag.innerHTML=code.substring(0,n);
+            if(n<code.length){
+                id=setTimeout(run,duration)
+            }else{
+                fn && fn.call()
+            }
+        },duration)    
     }
+
+    $
+
     let code=`
     #pikachu {
         position: relative;
@@ -177,5 +181,30 @@
     
     `
     writeCode('',code);
+
+    $('.actions').on('click','button',function(e){
+        let $button = $(e.currentTarget)
+        let speed = $button.attr('data-speed')
+        $button.addClass('active').siblings('.active').removeClass('active')
+        switch(speed){
+            case 'slow':
+                duration=100;
+                break;
+            case 'normal':
+                duration=50
+                break;
+            case 'fast':
+                duration=10;
+                break;
+            case 'end':
+                {
+                    window.clearTimeout(id)
+                    container.innerHTML=code
+                    container.parentElement.scrollTop=container.scrollHeight;
+                    styleTag.innerHTML=code
+                }
+        }
+    })
+
 
 }.call()
