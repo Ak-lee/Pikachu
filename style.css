@@ -135,7 +135,15 @@ animation:nose .23s infinite linear;
 	left:48px;
 }
 
-
+.yellow{
+	width:228px;
+	height:4px ;
+	background:#FFE600;
+	position:absolute;
+	top:62px;
+	z-index:2;
+	left:calc(50% - 114px);
+}
 .cheek {
     width: 82px;
     height: 82px;
